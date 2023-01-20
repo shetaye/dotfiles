@@ -8,10 +8,6 @@ unset conf
 #  Configure Path #
 ##							 ##
 
-### K8s
-path+="/Users/josephs/.arkade/bin/"
-[[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
-
 ### Node
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"  # This loads nvm
