@@ -8,17 +8,6 @@ unset conf
 #  Configure Path #
 ##							 ##
 
-### Google Cloud
-path+="/Users/josephs/Tools/cloud_sql_proxy/bin"
-# The next line updates PATH for the Google Cloud SDK.
-if [ -f '/Users/josephs/google-cloud-sdk/path.zsh.inc' ]; then . '/Users/josephs/google-cloud-sdk/path.zsh.inc'; fi
-# The next line enables shell command completion for gcloud.
-if [ -f '/Users/josephs/google-cloud-sdk/completion.zsh.inc' ]; then . '/Users/josephs/google-cloud-sdk/completion.zsh.inc'; fi
-
-
-### Go
-path+="/Users/josephs/go/bin"
-
 ### K8s
 path+="/Users/josephs/.arkade/bin/"
 [[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
