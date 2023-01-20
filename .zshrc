@@ -1,4 +1,4 @@
-# Load extern
+# Load conf
 for conf in "$HOME/.config/zsh/"*.zsh; do
   source "${conf}"
 done
