@@ -8,13 +8,6 @@ unset conf
 #  Configure Path #
 ##							 ##
 
-
-### 1Password
-# Autocomplete
-eval "$(op completion zsh)"; compdef _op op
-# Plugin
-source /Users/josephs/.config/op/plugins.sh
-
 ### System
 path+="/Users/josephs/.pub-cache/bin"
 path+="/Users/josephs/.local/bin"
