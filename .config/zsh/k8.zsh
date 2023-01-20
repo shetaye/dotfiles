@@ -6,5 +6,6 @@ if [[ -d $MACOS_ARKADE_BIN ]] then
 fi
 
 # kubectl
-
-[[ /usr/local/bin/kubectl ]] && source <(kubectl completion zsh)
+if [ -x "$(command -v kubectl)" ]; then
+	source <(kubectl completion zsh)
+fi
