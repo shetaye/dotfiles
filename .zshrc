@@ -8,21 +8,6 @@ unset conf
 #  Configure Path #
 ##							 ##
 
-### Java
-# JDK version
-jdk() {
-  version=$1
-  export JAVA_HOME=$(/usr/libexec/java_home -v"$version");
-  java -version
-}
-
-### Flutter
-path+="/Users/josephs/Tools/flutter/bin"
-export DART_SDK="/Users/josephs/Tools/flutter/bin/cache/dart-sdk"
-
-### Terraform
-path+="/Users/josephs/Tools/terraform/bin"
-
 ### Julia
 path+="/Applications/Julia-1.6.app/Contents/Resources/julia/bin"
 
