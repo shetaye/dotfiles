@@ -8,18 +8,6 @@ unset conf
 #  Configure Path #
 ##							 ##
 
-### Julia
-path+="/Applications/Julia-1.6.app/Contents/Resources/julia/bin"
-
-### GNAT
-path+="/Users/josephs/opt/GNAT/2020/bin"
-
-### GHDL
-path+="/opt/ghdl/bin"
-
-### LLVM
-#path+="/opt/llvm/bin"
-
 ### Google Cloud
 path+="/Users/josephs/Tools/cloud_sql_proxy/bin"
 # The next line updates PATH for the Google Cloud SDK.
