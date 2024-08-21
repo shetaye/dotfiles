@@ -1,0 +1,19 @@
+[user]
+	email = joseph@shetaye.me
+	name = Joseph Shetaye
+	signingkey = ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIiUqV9FDKBSzBUohY/GWSn0FVWPr5oAAR2jTs/W96gY
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[gpg]
+	format = ssh
+[gpg "ssh"]
+	program = /opt/1Password/op-ssh-sign
+[commit]
+	gpgsign = true
+[init]
+	defaultBranch = main
+[safe]
+  directory = *
+
+[includeIf "gitdir:~/projects/singularity/"]
+    path = ~/.gitconfig.singularity
