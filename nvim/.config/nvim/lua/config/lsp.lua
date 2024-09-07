@@ -169,10 +169,10 @@ end
 -- Typescript
 -- COMMAND: yarn global add typescript typescript-language-server
 -- COMMAND: npm install --global typescript typescript-language-server
-lsp.tsserver.setup{
-	capabilities = capabilities,
-	on_attach = on_attach
-}
+--lsp.ts_ls.setup{
+--	capabilities = capabilities,
+--	on_attach = on_attach
+--}
 
 -- Lua
 -- COMMAND: brew install lua-language-server
@@ -201,8 +201,8 @@ lsp.tsserver.setup{
 
 -- Go
 -- COMMAND: go install golang.org/x/tools/gopls@latest
-lsp.gopls.setup{
-  capabilities = capabilities,
-	on_attach = on_attach,
-  cmd = {"/home/shetaye/go/bin/gopls"}
-}
+--lsp.gopls.setup{
+--  capabilities = capabilities,
+--	on_attach = on_attach,
+--  cmd = {"/home/shetaye/go/bin/gopls"}
+--}
