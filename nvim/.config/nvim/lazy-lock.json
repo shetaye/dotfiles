@@ -11,7 +11,7 @@
   "neovim": { "branch": "main", "commit": "8b1fd252255a7f2c41b4192a787ab62660b29f72" },
   "nvim-cmp": { "branch": "main", "commit": "ae644feb7b67bf1ce4260c231d1d4300b19c6f30" },
   "nvim-lspconfig": { "branch": "master", "commit": "bdbc65aadc708ce528efb22bca5f82a7cca6b54d" },
-  "nvim-treesitter": { "branch": "master", "commit": "58030e6d6f1d6609b43dcb765d54539dcc6a1a76" },
+  "nvim-treesitter": { "branch": "master", "commit": "4770d9a1a77b0cc2b723c646c3dbe43a9133e5db" },
   "nvim-web-devicons": { "branch": "master", "commit": "9793801f974bba70e4ac5d7eae6c4f5659993d8e" },
   "vim-dim": { "branch": "main", "commit": "8320a40f12cf89295afc4f13eb10159f29c43777" },
   "vim-just": { "branch": "main", "commit": "8ed1e472b72b739bd852d2b9a2d688b3da015cf5" }
