@@ -1,0 +1,122 @@
+#!/bin/bash
+# System-wide light/dark theme toggle
+# Usage: theme-toggle [toggle|apply]
+#   toggle (default): flip mode and apply
+#   apply: read mode from state file and apply without flipping
+
+STATE_FILE="$HOME/.config/theme-mode"
+ALACRITTY_THEME="$HOME/.config/alacritty/current-theme.toml"
+ALACRITTY_THEMES="$HOME/.config/alacritty/themes"
+WAYBAR_DIR="$HOME/.config/waybar"
+WOFI_DIR="$HOME/.config/wofi"
+MAKO_DIR="$HOME/.config/mako"
+
+# Read current mode (default to light if missing)
+read_mode() {
+    if [ -f "$STATE_FILE" ]; then
+        cat "$STATE_FILE"
+    else
+        echo "light"
+    fi
+}
+
+# Write mode to state file
+write_mode() {
+    echo "$1" > "$STATE_FILE"
+}
+
+apply_alacritty() {
+    local theme="$1"
+    printf '[general]\nimport = ["%s/modus-%s.toml"]\n' "$ALACRITTY_THEMES" "$theme" > "$ALACRITTY_THEME"
+    touch "$HOME/.config/alacritty/alacritty.toml"
+}
+
+apply_waybar() {
+    local mode="$1"
+    cp "$WAYBAR_DIR/style-${mode}.css" "$WAYBAR_DIR/style.css"
+    killall -SIGUSR2 waybar 2>/dev/null
+}
+
+apply_wofi() {
+    local mode="$1"
+    cp "$WOFI_DIR/style-${mode}.css" "$WOFI_DIR/style.css"
+}
+
+apply_mako() {
+    local mode="$1"
+    cp "$MAKO_DIR/config-${mode}" "$MAKO_DIR/config"
+    makoctl reload 2>/dev/null
+}
+
+apply_system() {
+    local mode="$1"
+    if [ "$mode" = "light" ]; then
+        gsettings set org.gnome.desktop.interface color-scheme 'prefer-light'
+    else
+        gsettings set org.gnome.desktop.interface color-scheme 'prefer-dark'
+    fi
+}
+
+apply_nvim() {
+    local mode="$1"
+    local style colorscheme
+    if [ "$mode" = "light" ]; then
+        style="light"
+        colorscheme="modus_operandi"
+    else
+        style="dark"
+        colorscheme="modus_vivendi"
+    fi
+    for sock in /run/user/"$(id -u)"/nvim.*.0 /tmp/nvim.*/0; do
+        [ -S "$sock" ] || continue
+        nvim --server "$sock" --remote-send \
+            "<Cmd>lua require('modus-themes').setup({style='${style}',variant='tinted',italic_constructs=true,bold_constructs=true}); vim.cmd.colorscheme('${colorscheme}')<CR>" 2>/dev/null
+    done
+}
+
+apply_emacs() {
+    local mode="$1"
+    if [ "$mode" = "light" ]; then
+        emacsclient -e "(load-theme 'modus-operandi-tinted t)" 2>/dev/null
+    else
+        emacsclient -e "(load-theme 'modus-vivendi-tinted t)" 2>/dev/null
+    fi
+}
+
+apply_all() {
+    local mode="$1"
+    local theme
+    if [ "$mode" = "light" ]; then
+        theme="operandi"
+    else
+        theme="vivendi"
+    fi
+
+    apply_alacritty "$theme"
+    apply_waybar "$mode"
+    apply_wofi "$mode"
+    apply_mako "$mode"
+    apply_nvim "$mode"
+    apply_emacs "$mode"
+    apply_system "$mode"
+}
+
+case "${1:-toggle}" in
+    toggle)
+        current=$(read_mode)
+        if [ "$current" = "light" ]; then
+            new="dark"
+        else
+            new="light"
+        fi
+        write_mode "$new"
+        apply_all "$new"
+        ;;
+    apply)
+        apply_all "$(read_mode)"
+        ;;
+    *)
+        echo "Usage: theme-toggle [toggle|apply]" >&2
+        exit 1
+        ;;
+esac

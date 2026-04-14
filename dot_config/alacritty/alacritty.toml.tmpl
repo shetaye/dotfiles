@@ -1,0 +1,20 @@
+[font]
+{{ if eq .chezmoi.hostname "enkidu" -}}
+size = 10.0
+{{ else -}}
+size = 10.0
+{{ end }}
+[font.normal]
+family = "BerkeleyMono Nerd Font Mono"
+style = "Regular"
+
+[font.offset]
+x = 0
+y = 0
+
+[window]
+
+opacity=1
+
+[general]
+import = ["~/.config/alacritty/current-theme.toml"]

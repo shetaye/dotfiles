@@ -1,0 +1,136 @@
+/* ---------- globals / base ---------- */
+* {
+  font-family: "BerkeleyMono Nerd Font Mono";
+  font-size: 12px;
+  min-height: 0;
+}
+
+/* bar overall */
+window#waybar {
+  background: #fbf7f0;     /* bg-main */
+  color: #000000;          /* fg-main */
+  transition-property: background-color;
+  transition-duration: .5s;
+}
+
+window#waybar.hidden { opacity: 0.2; }
+#waybar.empty #window { background-color: transparent; }
+
+/* ---------- base module & window styling ---------- */
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#mpd,
+#window {
+  margin: 2px;
+  padding: 2px 4px;
+  background-color: #efe9dd;  /* bg-dim */
+  color: #000000;             /* fg-main */
+}
+
+/* window overrides */
+#window {
+  padding-left: 8px;
+  padding-right: 8px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* ---------- buttons & workspaces ---------- */
+button {
+  box-shadow: inset 0 -3px transparent;
+  border: none;
+  border-radius: 0;
+}
+
+button:hover {
+  background: inherit;
+  border-top: 2px solid #894000; /* yellow-warmer accent */
+}
+
+#workspaces button {
+  padding: 0 4px;
+  color: #000000; /* fg-main */
+}
+
+#workspaces button:hover {
+  background: #dfd5cf; /* bg-inactive */
+}
+
+/* focused + active */
+#workspaces button.focused,
+#workspaces button.active {
+  background-color: #dfd5cf; /* bg-inactive */
+  color: #602938;            /* yellow-cooler as accent */
+  border-top: 2px solid #602938;
+}
+
+#workspaces button.urgent {
+  background-color: #a60000; /* red */
+}
+
+/* drop left/right margins for edge workspaces */
+.modules-left > widget:first-child > #workspaces { margin-left: 0; }
+.modules-right > widget:last-child > #workspaces { margin-right: 0; }
+
+/* ---------- clock ---------- */
+#clock { font-size: 14px; }
+
+/* ---------- battery ---------- */
+#battery icon { color: #a60000; }   /* red */
+
+#battery.charging,
+#battery.plugged {
+  color: #ffffff;
+  background-color: #008900; /* green-intense */
+}
+
+@keyframes blink {
+  to { background-color: #ffffff; color: #000000; }
+}
+
+#battery.warning:not(.charging),
+#battery.critical:not(.charging) {
+  background-color: #a60000; /* red */
+  color: #ffffff;
+}
+
+#battery.critical:not(.charging) {
+  animation: blink 0.5s linear infinite alternate;
+}
+
+/* ---------- misc statuses ---------- */
+label:focus { background-color: #000000; }
+
+#network.disconnected { background-color: #a60000; }
+#temperature.critical { background-color: #dd22dd; /* magenta-intense */ }
+
+#idle_inhibitor.activated {
+  background-color: #dfd9cf; /* bg-mode-line-inactive */
+  color: #585858; /* fg-mode-line-inactive */
+}
+
+/* ---------- tray icons ---------- */
+#tray > .passive { -gtk-icon-effect: dim; }
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: #dd22dd; /* magenta-intense */
+}
+
+/* ---------- mode module ---------- */
+#mode {
+  background-color: #cab9b2; /* bg-mode-line-active */
+  border-bottom: 3px solid #545454; /* border-mode-line-active */
+}

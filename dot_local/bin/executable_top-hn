@@ -1,0 +1,28 @@
+#!/bin/bash
+
+output_flag=false
+while getopts ":o" opt; do
+  case $opt in
+    o)
+      output_flag=true
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit 1
+      ;;
+  esac
+done
+
+if command -v jq > /dev/null; then
+  set -o pipefail
+  if [ "$output_flag" = true ]; then
+    curl -s https://hn.algolia.com/api/v1/search?tags=front_page,story | jq -rM .hits[0].objectID | xargs -I {} firefox https://news.ycombinator.com/item?id={} &
+  else
+    curl -s https://hn.algolia.com/api/v1/search?tags=front_page,story | jq -rM .hits[0].title
+    if [ $? -ne 0 ]; then
+      echo "";
+    fi
+  fi
+else
+  echo "";
+fi

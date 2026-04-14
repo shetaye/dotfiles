@@ -1,0 +1,4 @@
+[side_channel]
+enabled = true
+remote_name = "origin"
+branch_name = "shephard/sync"

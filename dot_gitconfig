@@ -1,0 +1,15 @@
+[user]
+	email = joseph@shetaye.me
+        name = Joseph Shetaye
+        signingkey = B8F3019A3965315496BF6AEADA72C7FFD8BC2854
+[alias]
+	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+[commit]
+	gpgsign = true
+[init]
+	defaultBranch = main
+[safe]
+  directory = *
+
+[includeIf "gitdir:~/projects/singularity/"]
+    path = ~/.gitconfig.singularity

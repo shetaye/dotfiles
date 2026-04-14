@@ -1,0 +1,326 @@
+include /etc/sway/config.d/*
+
+set $mod Mod4
+
+# Font for window titles. Will also be used by the bar unless a different font
+# is used in the bar {} block below.
+#font pango:monospace 8
+#font pango:Berkeley Mono Nerd Font 8, Mononoki Nerd Font 8, monospace 8
+font pango:BerkeleyMono Nerd Font Mono 8, Mononoki Nerd Font 8, monospace 8
+
+# This font is widely installed, provides lots of unicode glyphs, right-to-left
+# text rendering and scalability on retina/hidpi displays (thanks to pango).
+#font pango:DejaVu Sans Mono 8
+
+# Start XDG autostart .desktop files using dex. See also
+# https://wiki.archlinux.org/index.php/XDG_Autostart
+exec --no-startup-id dex --autostart --environment sway
+
+# exec --no-startup-id feh --no-fehbg --bg-fill ~/.config/wallpaper.png
+output * {
+  background ~/.config/bitmap.svg center
+}
+
+set $laptop eDP-1
+
+output eDP-1 {
+  resolution 1920x1080
+}
+
+output "Microstep MPG491CX*" {
+{{- if eq .chezmoi.hostname "enkidu" }}
+  mode 5120x1440@120.000Hz
+{{- else }}
+  mode 5120x1440@59.977Hz
+{{- end }}
+  background #000000 solid_color
+}
+
+output DP-3 {
+{{- if eq .chezmoi.hostname "enkidu" }}
+  mode 5120x1440@120.000Hz
+{{- else }}
+  mode 5120x1440@59.977Hz
+{{- end }}
+  background #000000 solid_color
+}
+
+bindswitch --reload --locked lid:on output $laptop disable
+bindswitch --reload --locked lid:off output $laptop enable
+
+input type:touchpad {
+  dwt disabled
+
+  pointer_accel 0.25
+}
+
+smart_gaps inverse_outer
+bindsym $mod+g gaps horizontal current set 1280
+bindsym $mod+Shift+g gaps horizontal current set 0
+
+
+
+# The combination of xss-lock, nm-applet and pactl is a popular choice, so
+# they are included here as an example. Modify as you see fit.
+
+# xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
+# screen before suspend. Use loginctl lock-session to lock your screen.
+exec --no-startup-id xss-lock --transfer-sleep-lock -- swaylock --nofork
+
+# NetworkManager is the most popular way to manage wireless networks on Linux,
+# and nm-applet is a desktop environment-independent system tray GUI for it.
+exec --no-startup-id nm-applet
+
+exec --no-startup-id /usr/bin/emacs --daemon
+
+bindsym $mod+backslash exec /usr/bin/emacsclient -c -a "" /home/shetaye/org/motd.org
+
+# Use pactl to adjust volume in PulseAudio.
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle
+bindsym XF86AudioMicMute exec --no-startup-id pactl set-source-mute @DEFAULT_SOURCE@ toggle
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+
+# move tiling windows via drag & drop by left-clicking into the title bar,
+# or left-clicking anywhere into the window while holding the floating modifier.
+# tiling_drag modifier titlebar
+
+# start a terminal
+bindsym $mod+Return exec alacritty
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start dmenu (a program launcher)
+bindsym $mod+d exec --no-startup-id wofi --show drun
+
+# start passmenu
+# bindsym $mod+o exec --no-startup-id wofi-pass
+# bindsym $mod+o exec ~/.config/sway/op.sh
+
+# A more modern dmenu replacement is rofi:
+# bindcode $mod+40 exec "rofi -modi drun,run -show drun"
+# There also is i3-dmenu-desktop which only displays applications shipping a
+# .desktop file. It is a wrapper around dmenu, so you need that installed.
+# bindcode $mod+40 exec --no-startup-id i3-dmenu-desktop
+
+# change focus
+bindsym $mod+j focus left
+bindsym $mod+k focus down
+bindsym $mod+l focus up
+bindsym $mod+semicolon focus right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+
+# move focused window
+bindsym $mod+Shift+j move left
+bindsym $mod+Shift+k move down
+bindsym $mod+Shift+l move up
+bindsym $mod+Shift+semicolon move right
+
+# alternatively, you can use the cursor keys:
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+
+# split in horizontal orientation
+bindsym $mod+h split h
+
+# split in vertical orientation
+bindsym $mod+v split v
+
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+# bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+
+# focus the parent container
+bindsym $mod+a focus parent
+
+# focus the child container
+#bindsym $mod+d focus child
+
+# Define names for default workspaces for which we configure key bindings later on.
+# We use variables to avoid repeating the names in multiple places.
+set $ws1 "1"
+set $ws2 "2"
+set $ws3 "3"
+set $ws4 "4"
+set $ws5 "5"
+set $ws6 "6"
+set $ws7 "7"
+set $ws8 "8"
+set $ws9 "9"
+set $ws10 "10"
+
+# switch to workspace
+bindsym $mod+1 workspace number $ws1
+bindsym $mod+2 workspace number $ws2
+bindsym $mod+3 workspace number $ws3
+bindsym $mod+4 workspace number $ws4
+bindsym $mod+5 workspace number $ws5
+bindsym $mod+6 workspace number $ws6
+bindsym $mod+7 workspace number $ws7
+bindsym $mod+8 workspace number $ws8
+bindsym $mod+9 workspace number $ws9
+bindsym $mod+0 workspace number $ws10
+
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace number $ws1
+bindsym $mod+Shift+2 move container to workspace number $ws2
+bindsym $mod+Shift+3 move container to workspace number $ws3
+bindsym $mod+Shift+4 move container to workspace number $ws4
+bindsym $mod+Shift+5 move container to workspace number $ws5
+bindsym $mod+Shift+6 move container to workspace number $ws6
+bindsym $mod+Shift+7 move container to workspace number $ws7
+bindsym $mod+Shift+8 move container to workspace number $ws8
+bindsym $mod+Shift+9 move container to workspace number $ws9
+bindsym $mod+Shift+0 move container to workspace number $ws10
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+bindsym $mod+Shift+e exec "swaynag -f 'Berkeley Mono Nerd Font 10' -t warning -m 'Exit?' -B 'Yes, exit sway' 'swaymsg exit'"
+bindsym $mod+Shift+t exec ~/.local/bin/theme-toggle
+
+# resize window (you can also use the mouse for that)
+mode "resize" {
+        # These bindings trigger as soon as you enter the resize mode
+
+        # Pressing left will shrink the window’s width.
+        # Pressing right will grow the window’s width.
+        # Pressing up will shrink the window’s height.
+        # Pressing down will grow the window’s height.
+        bindsym j resize shrink width 10 px or 10 ppt
+        bindsym k resize grow height 10 px or 10 ppt
+        bindsym l resize shrink height 10 px or 10 ppt
+        bindsym semicolon resize grow width 10 px or 10 ppt
+
+        # same bindings, but for the arrow keys
+        bindsym Left resize shrink width 10 px or 10 ppt
+        bindsym Down resize grow height 10 px or 10 ppt
+        bindsym Up resize shrink height 10 px or 10 ppt
+        bindsym Right resize grow width 10 px or 10 ppt
+
+        # back to normal: Enter or Escape or $mod+r
+        bindsym Return mode "default"
+        bindsym Escape mode "default"
+        bindsym $mod+r mode "default"
+}
+
+bindsym $mod+r mode "resize"
+
+# move workspace between screens
+mode "window" {
+    bindsym h move workspace to output left
+    bindsym j move workspace to output down
+    bindsym k move workspace to output up
+    bindsym l move workspace to output right
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+    bindsym $mod+w mode "default"
+}
+bindsym $mod+w mode "window"
+
+
+# lock
+bindsym $mod+Control+l exec "swaylock"
+
+bar {
+    swaybar_command waybar
+}
+
+# Screenshot
+# bindsym $mod+Print exec grim -o $(swaymsg -t get_outputs | jq -r '.[] | select(.focused) | .name') /tmp/screenshot-$(date +'%Y%m%d-%H%M%S').png && notify-send "Screenshot saved" "$(ls -t /tmp/screenshot-*.png | head -n 1)"
+bindsym $mod+p exec screenshot
+
+bindsym XF86MonBrightnessDown exec brightnessctl set 10%-
+bindsym XF86MonBrightnessUp exec brightnessctl set 10%+
+
+
+# Notification daemon
+exec mako
+
+default_border pixel 2
+
+gaps inner 5
+gaps outer 5
+
+# set primary gruvbox colorscheme colors
+# set $bg #282828
+# set $red #cc241d
+# set $green #98971a
+# set $yellow #d79921
+# set $blue #458588
+# set $purple #b16286
+# set $aqua #689d68
+# set $gray #a89984
+# set $darkgray #1d2021
+
+# set $bg #191724
+# set $red #eb6f92
+# set $green #31748f
+# set $yellow #f6c177
+# set $blue #9ccfd8
+# set $purple #c4a7e7
+# set $aqua #ebbcba
+# set $gray #6e6a86
+# set $darkgray #26233a
+# set $white #e0def4
+
+set $bg #030102
+set $red #ff7358
+set $green #ffd8ff
+set $yellow #8380b9
+set $blue #8380b9
+set $purple #ffd8ff
+set $aqua #ff7358
+set $gray #473E42
+set $darkgray #1F181B
+set $white #FFD8FF
+
+# class                 border    backgr    text      indicator child_border
+# client.focused          $yellow   $yellow   $darkgray $yellow   $yellow
+# client.focused_inactive $darkgray $darkgray $yellow   $yellow   $darkgray
+# client.unfocused        $darkgray $darkgray $yellow   $yellow   $darkgray
+# client.urgent           $red      $red      $white    $red      $red
+client.focused          $red   $blue   $darkgray $blue   $red
+client.focused_inactive $darkgray $darkgray $blue   $blue   $darkgray
+client.unfocused        $darkgray $darkgray $blue   $blue   $darkgray
+client.urgent           $red      $red      $white    $red      $red
+
+# Dedicated app workspaces on F9-F12
+set $ws_discord "󰙯"
+set $ws_betterbird "󰇮"
+set $ws_1password "󰌋"
+set $ws_signal "󰍡"
+
+assign [class="discord"] workspace $ws_discord
+assign [app_id="eu.betterbird.Betterbird"] workspace $ws_betterbird
+assign [app_id="1password"] workspace $ws_1password
+assign [app_id="signal"] workspace $ws_signal
+
+bindsym F9                      workspace $ws_discord;    exec pgrep -x Discord || discord
+bindsym Print                   workspace $ws_discord;    exec pgrep -x Discord || discord
+bindsym F10                     workspace $ws_betterbird; exec pgrep -x betterbird || betterbird
+bindsym XF86SelectiveScreenshot workspace $ws_betterbird; exec pgrep -x betterbird || betterbird
+bindsym F11                     workspace $ws_1password;  exec pgrep -x 1password || 1password
+bindsym XF86LinkPhone           workspace $ws_1password;  exec pgrep -x 1password || 1password
+bindsym F12                     workspace $ws_signal;     exec pgrep -x signal-desktop || signal-desktop
+bindsym XF86Favorites           workspace $ws_signal;     exec pgrep -x signal-desktop || signal-desktop

@@ -1,0 +1,52 @@
+window {
+    margin: 0px;
+    border: 2px solid #9f9690; /* border */
+    background-color: #fbf7f0; /* bg-main */
+    font-family: "BerkeleyMono Nerd Font Mono";
+    font-size: 10pt;
+}
+
+#outer-box {
+    margin: 5px;
+    border: none;
+    background-color: #fbf7f0;
+}
+
+#input {
+    margin: 10px;
+    border: 1px solid #9f9690;
+    color: #000000;
+    background-color: #efe9dd; /* bg-dim */
+    padding: 5px;
+}
+
+#inner-box {
+    margin: 5px;
+    border: none;
+    background-color: #fbf7f0;
+}
+
+#text {
+    margin: 5px;
+    border: none;
+    color: #000000;
+}
+
+#entry {
+    padding: 8px;
+    border: none;
+}
+
+#entry:selected {
+    background-color: #c9b9b0; /* bg-active */
+    outline: none;
+}
+
+#text:selected {
+    color: #000000;
+    font-weight: bold;
+}
+
+#scroll {
+    margin: 5px;
+}

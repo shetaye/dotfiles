@@ -1,0 +1,15 @@
+# Roots
+root = /home/shetaye/docs
+root = ssh://shetaye@uruk/docs
+
+# Conflict resolution — prefer remote
+# prefer = ssh://shetaye@uruk/docs
+
+batch = true
+auto = true
+times = true
+#perms = 0
+
+ignore = Name {.DS_Store}
+ignore = Name {*.swp}
+ignore = Name {*~}

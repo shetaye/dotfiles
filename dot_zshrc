@@ -1,0 +1,212 @@
+#
+# ~/.zshrc
+#
+
+# Execute non-interactive stuff first
+
+# Add user bin
+export PATH="$HOME/.local/bin/:$PATH"
+
+# Time
+export TZ='America/Los_Angeles'
+
+# Set data directory based on hostname
+case "$(hostname)" in
+  enkidu)
+    export DATA_DIR="/data"
+    ;;
+  gilgamesh)
+    export DATA_DIR="/mnt/data"
+    ;;
+  *)
+    export DATA_DIR="$HOME/data"
+    ;;
+esac
+
+# CS140E/240LX
+#export PATH="$DATA_DIR/tools/gcc-arm-none-eabi-10.3-2021.10/bin:$PATH"
+export PATH="$DATA_DIR/tools/gcc-arm-none-eabi-10-2020-q4-major/bin:$PATH"
+export PATH="$DATA_DIR/tools/gcc-arm-10.2-2020.11-x86_64-aarch64-none-elf/bin:$PATH"
+export PATH="$DATA_DIR/tools/arm-gnu-toolchain-14.3.rel1-x86_64-aarch64-none-linux-gnu/bin:$PATH"
+export CS140E_PATH="$DATA_DIR/projects/stanford/englerverse/140e/"
+export CS140E_2025_PATH="$DATA_DIR/projects/stanford/140e-25/"
+export CS140E_2026_PATH=$CS140E_PATH
+# export CS140E_2026_PATH="$HOME/tmp/cs140e-26win/"
+export CS240LX_2024_PATH="$DATA_DIR/repos/github.com/dddrrreee/cs240lx-24spr"
+export CS240LX_2025_PATH="$DATA_DIR/projects/stanford/240lx-25/"
+export CS340LX_2025_PATH="$DATA_DIR/projects/stanford/340lx/"
+export PATH="$CS140E_PATH/bin:$PATH"
+
+# Bossa
+export PATH="$DATA_DIR/tools/BOSSA/bin:$PATH"
+
+# PyEnv
+#export PYENV_ROOT="$HOME/.pyenv"
+#command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
+
+# STM32
+export STM32_PRG_PATH="$DATA_DIR/tools/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin"
+export PATH="$STM32_PRG_PATH:$PATH"
+
+# TEX
+export MANPATH="/usr/local/texlive/2025/texmf-dist/doc/man:$MANPATH"
+export INFOPATH="/usr/local/texlive/2025/texmf-dist/doc/info:$INFOPATH"
+export PATH="/usr/local/texlive/2025/bin/x86_64-linux:$PATH"
+
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+# completion system
+autoload -Uz compinit
+compinit
+
+# Shell line
+PS1='%1~ $ '
+
+# Common aliases
+alias ls='ls --color=auto'
+alias ll='\ls --color=never'
+alias la='\ls -alh --color=never'
+alias grep='grep --color=auto'
+
+# XClip 
+if command -v xclip > /dev/null; then
+  alias copy='xclip -i -selection c'
+  alias paste='xclip -o -selection c'
+  alias pwdc='echo $PWD | copy'
+  alias pwdp='cd $(paste)'
+
+# Or wl-copy
+elif command -v wl-copy > /dev/null; then
+  alias copy='wl-copy'
+  alias paste='wl-paste'
+  alias pwdc='echo $PWD | copy'
+  alias pwdp='cd $(paste)' 
+fi
+
+# Emacs
+if command -v emacsclient > /dev/null; then
+  alias emacs='emacsclient -c'
+fi
+
+# PyEnv
+# if command -v pyenv > /dev/null; then
+#   eval "$(pyenv init -)"
+# fi
+
+# hledger
+if command -v hledger > /dev/null; then
+  export LEDGER_FILE="$HOME/projects/personal/finances/2024.journal"
+  export TIME_FILE="$HOME/projects/personal/time/2024.timeclock"
+
+  ti() {
+    echo "i $(date '+%Y-%m-%d %H:%M:%S') $1" >> "$TIME_FILE"
+  }
+  alias to='echo o $(date "+%Y-%m-%d %H:%M:%S") >>$TIME_FILE'
+fi
+
+# nvm
+[ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
+
+# Go
+export PATH="$HOME/go/bin/:$PATH"
+
+# Menu
+alias menu="node $HOME/projects/personal/menu/index.mjs"
+
+# Racket
+export PATH="$DATA_DIR/tools/racket/bin:$PATH"
+
+[ -f "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env" # ghcup-env
+
+# GPG
+if command -v gpg > /dev/null; then
+  export GPG_TTY=$(tty)
+  gpg-connect-agent /bye
+  unset SSH_AGENT_PID
+  if [ "${gnupg_SSH_AUTH_SOCK_by:-0}" -ne $$ ]; then
+    export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+  fi
+fi
+
+# neovim
+if command -v nvim > /dev/null; then
+  alias nv='nvim'
+  export EDITOR="$(which nvim)"
+  export VISUAL="$(which nvim)"
+  export MANPAGER='nvim +Man!'
+fi
+
+# Conda
+# >>> conda initialize >>>
+# !! Contents within this block are managed by 'conda init' !!
+__conda_setup="$('$HOME/miniforge3/bin/conda' 'shell.zsh' 'hook' 2> /dev/null)"
+if [ $? -eq 0 ]; then
+    eval "$__conda_setup"
+else
+if [ -f "$HOME/miniforge3/etc/profile.d/conda.sh" ]; then
+    . "$HOME/miniforge3/etc/profile.d/conda.sh"
+else
+    export PATH="$HOME/miniforge3/bin:$PATH"
+fi
+fi
+unset __conda_setup
+# <<< conda initialize <<<
+
+# . "$HOME/.local/bin/env"
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+case ":$PATH:" in
+    *:$HOME/.juliaup/bin:*)
+        ;;
+
+    *)
+        export PATH=$HOME/.juliaup/bin${PATH:+:${PATH}}
+        ;;
+esac
+
+# <<< juliaup initialize <<<
+
+# OSS CAD Suite
+export PATH="$DATA_DIR/tools/oss-cad-suite/bin:$PATH"
+
+# NNN
+n ()
+{
+    # Block nesting of nnn in subshells
+    [ "${NNNLVL:-0}" -eq 0 ] || {
+        echo "nnn is already running"
+        return
+    }
+
+    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+    command nnn "$@"
+
+    [ ! -f "$NNN_TMPFILE" ] || {
+        . "$NNN_TMPFILE"
+        rm -f -- "$NNN_TMPFILE" > /dev/null
+    }
+}
+export NNN_FIFO=/tmp/nnn.fifo
+
+vterm_cmd() {
+    # Send elisp to Emacs via vterm escape
+    printf '\e]51;E%s\a' "$1"
+}
+
+e() {
+    # Open a file in Emacs from vterm
+    # Usage: e path/to/file
+    local file
+    file="$(printf '%s' "$1" | sed 's/"/\\\\"/g')"   # escape double quotes
+    vterm_cmd "(my-vterm-find-file \"${file}\")"
+}
+
+
+# Skim
+if command -v sk > /dev/null; then
+  source <(sk --shell zsh)
+fi

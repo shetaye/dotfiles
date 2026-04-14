@@ -1,0 +1,136 @@
+/* ---------- globals / base ---------- */
+* {
+  font-family: "BerkeleyMono Nerd Font Mono";
+  font-size: 12px;
+  min-height: 0;
+}
+
+/* bar overall */
+window#waybar {
+  background: #0d0e1c;     /* bg-main */
+  color: #ffffff;           /* fg-main */
+  transition-property: background-color;
+  transition-duration: .5s;
+}
+
+window#waybar.hidden { opacity: 0.2; }
+#waybar.empty #window { background-color: transparent; }
+
+/* ---------- base module & window styling ---------- */
+#clock,
+#battery,
+#cpu,
+#memory,
+#disk,
+#temperature,
+#backlight,
+#network,
+#pulseaudio,
+#wireplumber,
+#custom-media,
+#tray,
+#mode,
+#idle_inhibitor,
+#scratchpad,
+#mpd,
+#window {
+  margin: 2px;
+  padding: 2px 4px;
+  background-color: #1d2235;  /* bg-dim */
+  color: #ffffff;              /* fg-main */
+}
+
+/* window overrides */
+#window {
+  padding-left: 8px;
+  padding-right: 8px;
+  font-size: 14px;
+  font-weight: bold;
+}
+
+/* ---------- buttons & workspaces ---------- */
+button {
+  box-shadow: inset 0 -3px transparent;
+  border: none;
+  border-radius: 0;
+}
+
+button:hover {
+  background: inherit;
+  border-top: 2px solid #fec43f; /* yellow-warmer accent */
+}
+
+#workspaces button {
+  padding: 0 4px;
+  color: #ffffff; /* fg-main */
+}
+
+#workspaces button:hover {
+  background: #2a2b42; /* bg-inactive */
+}
+
+/* focused + active */
+#workspaces button.focused,
+#workspaces button.active {
+  background-color: #2a2b42; /* bg-inactive */
+  color: #d0bc00;            /* yellow as accent */
+  border-top: 2px solid #d0bc00;
+}
+
+#workspaces button.urgent {
+  background-color: #ff5f59; /* red */
+}
+
+/* drop left/right margins for edge workspaces */
+.modules-left > widget:first-child > #workspaces { margin-left: 0; }
+.modules-right > widget:last-child > #workspaces { margin-right: 0; }
+
+/* ---------- clock ---------- */
+#clock { font-size: 14px; }
+
+/* ---------- battery ---------- */
+#battery icon { color: #ff5f59; }   /* red */
+
+#battery.charging,
+#battery.plugged {
+  color: #000000;
+  background-color: #44bc44; /* green-intense */
+}
+
+@keyframes blink {
+  to { background-color: #000000; color: #ffffff; }
+}
+
+#battery.warning:not(.charging),
+#battery.critical:not(.charging) {
+  background-color: #ff5f59; /* red */
+  color: #000000;
+}
+
+#battery.critical:not(.charging) {
+  animation: blink 0.5s linear infinite alternate;
+}
+
+/* ---------- misc statuses ---------- */
+label:focus { background-color: #ffffff; }
+
+#network.disconnected { background-color: #ff5f59; }
+#temperature.critical { background-color: #ff66ff; /* magenta-intense */ }
+
+#idle_inhibitor.activated {
+  background-color: #2a2b42; /* bg-mode-line-inactive */
+  color: #989898; /* fg-mode-line-inactive */
+}
+
+/* ---------- tray icons ---------- */
+#tray > .passive { -gtk-icon-effect: dim; }
+#tray > .needs-attention {
+  -gtk-icon-effect: highlight;
+  background-color: #ff66ff; /* magenta-intense */
+}
+
+/* ---------- mode module ---------- */
+#mode {
+  background-color: #505050; /* bg-mode-line-active */
+  border-bottom: 3px solid #a0a0a0; /* border-mode-line-active */
+}
