@@ -10,42 +10,37 @@ export PATH="$HOME/.local/bin/:$PATH"
 # Time
 export TZ='America/Los_Angeles'
 
-# Set data directory based on hostname
-case "$(hostname)" in
-  enkidu)
-    export DATA_DIR="/data"
-    ;;
-  gilgamesh)
-    export DATA_DIR="/mnt/data"
-    ;;
-  *)
-    export DATA_DIR="$HOME/data"
-    ;;
-esac
+# Common roots
+export TOOLS_DIR="$HOME/tools"
+export DOCS_DIR="$HOME/docs"
+export PROJECTS_DIR="$HOME/projects"
+export ORG_DIR="$HOME/org"
+export TYPST_DIR="$HOME/typst"
+export TEX_DIR="$HOME/tex"
 
 # CS140E/240LX
-#export PATH="$DATA_DIR/tools/gcc-arm-none-eabi-10.3-2021.10/bin:$PATH"
-export PATH="$DATA_DIR/tools/gcc-arm-none-eabi-10-2020-q4-major/bin:$PATH"
-export PATH="$DATA_DIR/tools/gcc-arm-10.2-2020.11-x86_64-aarch64-none-elf/bin:$PATH"
-export PATH="$DATA_DIR/tools/arm-gnu-toolchain-14.3.rel1-x86_64-aarch64-none-linux-gnu/bin:$PATH"
-export CS140E_PATH="$DATA_DIR/projects/stanford/englerverse/140e/"
-export CS140E_2025_PATH="$DATA_DIR/projects/stanford/140e-25/"
+#export PATH="$TOOLS_DIR/gcc-arm-none-eabi-10.3-2021.10/bin:$PATH"
+export PATH="$TOOLS_DIR/gcc-arm-none-eabi-10-2020-q4-major/bin:$PATH"
+export PATH="$TOOLS_DIR/gcc-arm-10.2-2020.11-x86_64-aarch64-none-elf/bin:$PATH"
+export PATH="$TOOLS_DIR/arm-gnu-toolchain-14.3.rel1-x86_64-aarch64-none-linux-gnu/bin:$PATH"
+export CS140E_PATH="$PROJECTS_DIR/stanford/englerverse/140e/"
+export CS140E_2025_PATH="$PROJECTS_DIR/stanford/englerverse/140e-25/"
 export CS140E_2026_PATH=$CS140E_PATH
 # export CS140E_2026_PATH="$HOME/tmp/cs140e-26win/"
-export CS240LX_2024_PATH="$DATA_DIR/repos/github.com/dddrrreee/cs240lx-24spr"
-export CS240LX_2025_PATH="$DATA_DIR/projects/stanford/240lx-25/"
-export CS340LX_2025_PATH="$DATA_DIR/projects/stanford/340lx/"
+export CS240LX_2024_PATH="$PROJECTS_DIR/stanford/englerverse/240lx-24"
+export CS240LX_2025_PATH="$PROJECTS_DIR/stanford/englerverse/240lx-25"
+export CS340LX_2025_PATH="$PROJECTS_DIR/stanford/englerverse/340lx-25"
 export PATH="$CS140E_PATH/bin:$PATH"
 
 # Bossa
-export PATH="$DATA_DIR/tools/BOSSA/bin:$PATH"
+export PATH="$TOOLS_DIR/BOSSA/bin:$PATH"
 
 # PyEnv
 #export PYENV_ROOT="$HOME/.pyenv"
 #command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 
 # STM32
-export STM32_PRG_PATH="$DATA_DIR/tools/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin"
+export STM32_PRG_PATH="$TOOLS_DIR/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin"
 export PATH="$STM32_PRG_PATH:$PATH"
 
 # TEX
@@ -96,8 +91,8 @@ fi
 
 # hledger
 if command -v hledger > /dev/null; then
-  export LEDGER_FILE="$HOME/projects/personal/finances/2024.journal"
-  export TIME_FILE="$HOME/projects/personal/time/2024.timeclock"
+  export LEDGER_FILE="$PROJECTS_DIR/personal/finances/2024.journal"
+  export TIME_FILE="$PROJECTS_DIR/personal/time/2024.timeclock"
 
   ti() {
     echo "i $(date '+%Y-%m-%d %H:%M:%S') $1" >> "$TIME_FILE"
@@ -112,10 +107,10 @@ fi
 export PATH="$HOME/go/bin/:$PATH"
 
 # Menu
-alias menu="node $HOME/projects/personal/menu/index.mjs"
+alias menu="node $PROJECTS_DIR/personal/menu/index.mjs"
 
 # Racket
-export PATH="$DATA_DIR/tools/racket/bin:$PATH"
+export PATH="$TOOLS_DIR/racket/bin:$PATH"
 
 [ -f "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env" # ghcup-env
 
@@ -171,7 +166,7 @@ esac
 # <<< juliaup initialize <<<
 
 # OSS CAD Suite
-export PATH="$DATA_DIR/tools/oss-cad-suite/bin:$PATH"
+export PATH="$TOOLS_DIR/oss-cad-suite/bin:$PATH"
 
 # NNN
 n ()

@@ -71,9 +71,9 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- swaylock --nofork
 # and nm-applet is a desktop environment-independent system tray GUI for it.
 exec --no-startup-id nm-applet
 
-exec --no-startup-id /usr/bin/emacs --daemon
+exec --no-startup-id emacs --daemon
 
-bindsym $mod+backslash exec /usr/bin/emacsclient -c -a "" /home/shetaye/org/motd.org
+bindsym $mod+backslash exec emacsclient -c -a "" "$HOME/org/motd.org"
 
 # Use pactl to adjust volume in PulseAudio.
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10%

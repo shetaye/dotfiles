@@ -10,30 +10,38 @@ export PATH="$HOME/.local/bin/:$PATH"
 # Time
 export TZ='America/Los_Angeles'
 
+# Common roots
+export TOOLS_DIR="$HOME/tools"
+export DOCS_DIR="$HOME/docs"
+export PROJECTS_DIR="$HOME/projects"
+export ORG_DIR="$HOME/org"
+export TYPST_DIR="$HOME/typst"
+export TEX_DIR="$HOME/tex"
+
 # CS140E/240LX
-#export PATH="/mnt/data/tools/gcc-arm-none-eabi-10.3-2021.10/bin:$PATH"
-export PATH="/mnt/data/tools/gcc-arm-none-eabi-10-2020-q4-major/bin:$PATH"
-export PATH="/mnt/data/tools/gcc-arm-10.2-2020.11-x86_64-aarch64-none-elf/bin:$PATH"
-export PATH="/mnt/data/tools/arm-gnu-toolchain-14.3.rel1-x86_64-aarch64-none-linux-gnu/bin:$PATH"
-export CS140E_PATH="/mnt/data/projects/stanford/englerverse/140e/"
-export CS140E_2024_PATH="/mnt/data/projects/stanford/englerverse/140e-24/"
-export CS140E_2025_PATH="/mnt/data/projects/stanford/englerverse/140e-25/"
+#export PATH="$TOOLS_DIR/gcc-arm-none-eabi-10.3-2021.10/bin:$PATH"
+export PATH="$TOOLS_DIR/gcc-arm-none-eabi-10-2020-q4-major/bin:$PATH"
+export PATH="$TOOLS_DIR/gcc-arm-10.2-2020.11-x86_64-aarch64-none-elf/bin:$PATH"
+export PATH="$TOOLS_DIR/arm-gnu-toolchain-14.3.rel1-x86_64-aarch64-none-linux-gnu/bin:$PATH"
+export CS140E_PATH="$PROJECTS_DIR/stanford/englerverse/140e/"
+export CS140E_2024_PATH="$PROJECTS_DIR/stanford/englerverse/140e-24/"
+export CS140E_2025_PATH="$PROJECTS_DIR/stanford/englerverse/140e-25/"
 export CS140E_2026_PATH=$CS140E_PATH
-# export CS140E_2026_PATH=/home/shetaye/tmp/cs140e-26win/
-export CS240LX_2024_PATH="/mnt/data/repos/github.com/dddrrreee/cs240lx-24spr"
-export CS240LX_2025_PATH="/mnt/data/projects/stanford/240lx-25/"
-export CS340LX_2025_PATH="/mnt/data/projects/stanford/340lx/"
+# export CS140E_2026_PATH="$HOME/tmp/cs140e-26win/"
+export CS240LX_2024_PATH="$PROJECTS_DIR/stanford/englerverse/240lx-24"
+export CS240LX_2025_PATH="$PROJECTS_DIR/stanford/englerverse/240lx-25"
+export CS340LX_2025_PATH="$PROJECTS_DIR/stanford/englerverse/340lx-25"
 export PATH="$CS140E_PATH/bin:$PATH"
 
 # Bossa
-export PATH="/mnt/data/tools/BOSSA/bin:$PATH"
+export PATH="$TOOLS_DIR/BOSSA/bin:$PATH"
 
 # PyEnv
 #export PYENV_ROOT="$HOME/.pyenv"
 #command -v pyenv >/dev/null || export PATH="$PYENV_ROOT/bin:$PATH"
 
 # STM32
-export STM32_PRG_PATH=/mnt/data/tools/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin
+export STM32_PRG_PATH="$TOOLS_DIR/STMicroelectronics/STM32Cube/STM32CubeProgrammer/bin"
 export PATH="$STM32_PRG_PATH:$PATH"
 
 # TEX
@@ -85,8 +93,8 @@ fi
 
 # hledger
 if command -v hledger > /dev/null; then
-  export LEDGER_FILE="$HOME/projects/personal/finances/2024.journal"
-  export TIME_FILE="$HOME/projects/personal/time/2024.timeclock"
+  export LEDGER_FILE="$PROJECTS_DIR/personal/finances/2024.journal"
+  export TIME_FILE="$PROJECTS_DIR/personal/time/2024.timeclock"
 
   ti() {
     echo "i $(date '+%Y-%m-%d %H:%M:%S') $1" >> "$TIME_FILE"
@@ -98,15 +106,15 @@ fi
 [ -f /usr/share/nvm/init-nvm.sh ] && source /usr/share/nvm/init-nvm.sh
 
 # Go
-export PATH="~/go/bin/:$PATH"
+export PATH="$HOME/go/bin:$PATH"
 
 # Menu
-alias menu="node $HOME/projects/personal/menu/index.mjs"
+alias menu="node $PROJECTS_DIR/personal/menu/index.mjs"
 
 # Racket
-export PATH="/mnt/data/tools/racket/bin:$PATH"
+export PATH="$TOOLS_DIR/racket/bin:$PATH"
 
-[ -f "/home/shetaye/.ghcup/env" ] && . "/home/shetaye/.ghcup/env" # ghcup-env
+[ -f "$HOME/.ghcup/env" ] && . "$HOME/.ghcup/env" # ghcup-env
 
 # GPG
 if command -v gpg > /dev/null; then
@@ -129,38 +137,38 @@ fi
 # Conda
 # >>> conda initialize >>>
 # !! Contents within this block are managed by 'conda init' !!
-__conda_setup="$('/home/shetaye/miniforge3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
+__conda_setup="$('$HOME/miniforge3/bin/conda' 'shell.bash' 'hook' 2> /dev/null)"
 if [ $? -eq 0 ]; then
     eval "$__conda_setup"
 else
-if [ -f "/home/shetaye/miniforge3/etc/profile.d/conda.sh" ]; then
-    . "/home/shetaye/miniforge3/etc/profile.d/conda.sh"
+if [ -f "$HOME/miniforge3/etc/profile.d/conda.sh" ]; then
+    . "$HOME/miniforge3/etc/profile.d/conda.sh"
 else
-    export PATH="/home/shetaye/miniforge3/bin:$PATH"
+    export PATH="$HOME/miniforge3/bin:$PATH"
 fi
 fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-. "$HOME/.local/bin/env"
+[ -f "$HOME/.local/bin/env" ] && . "$HOME/.local/bin/env"
 
 # >>> juliaup initialize >>>
 
 # !! Contents within this block are managed by juliaup !!
 
 case ":$PATH:" in
-    *:/home/shetaye/.juliaup/bin:*)
+    *:$HOME/.juliaup/bin:*)
         ;;
 
     *)
-        export PATH=/home/shetaye/.juliaup/bin${PATH:+:${PATH}}
+        export PATH=$HOME/.juliaup/bin${PATH:+:${PATH}}
         ;;
 esac
 
 # <<< juliaup initialize <<<
 
 # OSS CAD Suite
-export PATH="/mnt/data/tools/oss-cad-suite/bin:$PATH"
+export PATH="$TOOLS_DIR/oss-cad-suite/bin:$PATH"
 
 
 # NNN
@@ -217,7 +225,7 @@ fi
 
 
 # opencode
-export PATH=/home/shetaye/.opencode/bin:$PATH
+export PATH="$HOME/.opencode/bin:$PATH"
 
 export SUDO_ASKPASS="$HOME/.local/bin/sudo-askpass"
 export MULTITUDE_DATA_DIR="$HOME/.multitude"
