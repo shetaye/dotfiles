@@ -1,0 +1,7 @@
+{{- $profile := promptStringOnce . "profile" "Profile (desktop/remote)" "desktop" -}}
+
+[data]
+    profile = "{{ $profile }}"
+
+[secret]
+    excludeFiles = [".gitconfig"]
