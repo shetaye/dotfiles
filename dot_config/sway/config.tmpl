@@ -6,7 +6,8 @@ set $mod Mod4
 # is used in the bar {} block below.
 #font pango:monospace 8
 #font pango:Berkeley Mono Nerd Font 8, Mononoki Nerd Font 8, monospace 8
-font pango:BerkeleyMono Nerd Font Mono 8, Mononoki Nerd Font 8, monospace 8
+#font pango:BerkeleyMono Nerd Font Mono 8, Mononoki Nerd Font 8, monospace 8
+font pango:Cozette 13,BerkeleyMono Nerd Font Mono 8, Mononoki Nerd Font 8, monospace 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -18,7 +19,9 @@ exec --no-startup-id dex --autostart --environment sway
 
 # exec --no-startup-id feh --no-fehbg --bg-fill ~/.config/wallpaper.png
 output * {
-  background ~/.config/bitmap.svg center
+  #background ~/.config/bitmap.svg center
+  background ~/.config/wallpaper.jpg fill
+
 }
 
 set $laptop eDP-1

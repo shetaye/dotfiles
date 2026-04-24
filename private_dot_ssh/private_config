@@ -1,8 +1,9 @@
 Host tt1
     HostName tt-qb1.stanford.edu
+    Port 2222
     ForwardAgent yes
 
 Host tt2
-    HostName tt-qb2.stanford.edu
+    #HostName tt-qb2.stanford.edu
     ProxyJump tt1
     ForwardAgent yes

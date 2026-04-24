@@ -12,10 +12,11 @@
   min-height: 0;
 }
 
+
 /* bar overall */
 window#waybar {
-  background: #fbf7f0;     /* bg-main */
-  color: #000000;          /* fg-main */
+  background: #0d0e1c;     /* bg-main */
+  color: #ffffff;           /* fg-main */
   transition-property: background-color;
   transition-duration: .5s;
 }
@@ -43,8 +44,8 @@ window#waybar.hidden { opacity: 0.2; }
 #window {
   margin: 2px;
   padding: 2px 4px;
-  background-color: #efe9dd;  /* bg-dim */
-  color: #000000;             /* fg-main */
+  background-color: #1d2235;  /* bg-dim */
+  color: #ffffff;              /* fg-main */
 }
 
 /* window overrides */
@@ -64,28 +65,28 @@ button {
 
 button:hover {
   background: inherit;
-  border-top: 2px solid #894000; /* yellow-warmer accent */
+  border-top: 2px solid #fec43f; /* yellow-warmer accent */
 }
 
 #workspaces button {
   padding: 0 4px;
-  color: #000000; /* fg-main */
+  color: #ffffff; /* fg-main */
 }
 
 #workspaces button:hover {
-  background: #dfd5cf; /* bg-inactive */
+  background: #2a2b42; /* bg-inactive */
 }
 
 /* focused + active */
 #workspaces button.focused,
 #workspaces button.active {
-  background-color: #dfd5cf; /* bg-inactive */
-  color: #602938;            /* yellow-cooler as accent */
-  border-top: 2px solid #602938;
+  background-color: #2a2b42; /* bg-inactive */
+  color: #d0bc00;            /* yellow as accent */
+  border-top: 2px solid #d0bc00;
 }
 
 #workspaces button.urgent {
-  background-color: #a60000; /* red */
+  background-color: #ff5f59; /* red */
 }
 
 /* drop left/right margins for edge workspaces */
@@ -96,22 +97,22 @@ button:hover {
 #clock { font-size: 14px; }
 
 /* ---------- battery ---------- */
-#battery icon { color: #a60000; }   /* red */
+#battery icon { color: #ff5f59; }   /* red */
 
 #battery.charging,
 #battery.plugged {
-  color: #ffffff;
-  background-color: #008900; /* green-intense */
+  color: #000000;
+  background-color: #44bc44; /* green-intense */
 }
 
 @keyframes blink {
-  to { background-color: #ffffff; color: #000000; }
+  to { background-color: #000000; color: #ffffff; }
 }
 
 #battery.warning:not(.charging),
 #battery.critical:not(.charging) {
-  background-color: #a60000; /* red */
-  color: #ffffff;
+  background-color: #ff5f59; /* red */
+  color: #000000;
 }
 
 #battery.critical:not(.charging) {
@@ -119,25 +120,25 @@ button:hover {
 }
 
 /* ---------- misc statuses ---------- */
-label:focus { background-color: #000000; }
+label:focus { background-color: #ffffff; }
 
-#network.disconnected { background-color: #a60000; }
-#temperature.critical { background-color: #dd22dd; /* magenta-intense */ }
+#network.disconnected { background-color: #ff5f59; }
+#temperature.critical { background-color: #ff66ff; /* magenta-intense */ }
 
 #idle_inhibitor.activated {
-  background-color: #dfd9cf; /* bg-mode-line-inactive */
-  color: #585858; /* fg-mode-line-inactive */
+  background-color: #2a2b42; /* bg-mode-line-inactive */
+  color: #989898; /* fg-mode-line-inactive */
 }
 
 /* ---------- tray icons ---------- */
 #tray > .passive { -gtk-icon-effect: dim; }
 #tray > .needs-attention {
   -gtk-icon-effect: highlight;
-  background-color: #dd22dd; /* magenta-intense */
+  background-color: #ff66ff; /* magenta-intense */
 }
 
 /* ---------- mode module ---------- */
 #mode {
-  background-color: #cab9b2; /* bg-mode-line-active */
-  border-bottom: 3px solid #545454; /* border-mode-line-active */
+  background-color: #505050; /* bg-mode-line-active */
+  border-bottom: 3px solid #a0a0a0; /* border-mode-line-active */
 }

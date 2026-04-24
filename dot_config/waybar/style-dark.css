@@ -1,7 +1,14 @@
 /* ---------- globals / base ---------- */
+/*
 * {
   font-family: "BerkeleyMono Nerd Font Mono";
   font-size: 12px;
+  min-height: 0;
+}
+*/
+* {
+  font-family: "Cozette";
+  font-size: 13px;
   min-height: 0;
 }
 

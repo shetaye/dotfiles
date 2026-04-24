@@ -6,31 +6,57 @@
 (setq line-move-visual t)
 
 ;; Fonts
+; (set-face-attribute 'default nil
+; 		    :family "BerkeleyMono Nerd Font Mono"
+; 		    :height 100
+; 		    :weight 'normal
+; 		    :width 'normal)
+; 
+; (set-face-attribute 'bold nil
+; 		    :family "BerkeleyMono Nerd Font Mono"
+; 		    :height 100
+; 		    :weight 'bold
+; 		    :width 'normal)
+; 
+; (set-face-attribute 'italic nil
+; 		    :family "BerkeleyMono Nerd Font Mono"
+; 		    :height 100
+; 		    :weight 'normal
+;                     :slant 'italic
+; 		    :width 'normal)
+; 
+; (set-face-attribute 'bold-italic nil
+; 		    :family "BerkeleyMono Nerd Font Mono"
+; 		    :height 100
+;                     :slant 'italic
+; 		    :weight 'bold
+; 		    :width 'normal)
+
 (set-face-attribute 'default nil
-		    :family "BerkeleyMono Nerd Font Mono"
-		    :height 100
-		    :weight 'normal
-		    :width 'normal)
+ 		    :family "Cozette"
+ 		    :height 130
+ 		    :weight 'normal
+ 		    :width 'normal)
 
 (set-face-attribute 'bold nil
-		    :family "BerkeleyMono Nerd Font Mono"
-		    :height 100
-		    :weight 'bold
-		    :width 'normal)
+ 		    :family "Cozette"
+ 		    :height 130
+ 		    :weight 'normal
+ 		    :width 'normal)
 
 (set-face-attribute 'italic nil
-		    :family "BerkeleyMono Nerd Font Mono"
-		    :height 100
-		    :weight 'normal
-                    :slant 'italic
-		    :width 'normal)
+ 		    :family "Cozette"
+ 		    :height 130
+ 		    :weight 'normal
+ 		    :width 'normal)
 
 (set-face-attribute 'bold-italic nil
-		    :family "BerkeleyMono Nerd Font Mono"
-		    :height 100
-                    :slant 'italic
-		    :weight 'bold
-		    :width 'normal)
+ 		    :family "Cozette"
+ 		    :height 130
+ 		    :weight 'normal
+ 		    :width 'normal)
+
+
 
 ;; Tramp
 (require 'tramp)
