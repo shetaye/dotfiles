@@ -150,6 +150,10 @@
   :straight t
   :init (vertico-mode 1))
 
+(use-package vertico-posframe
+  :straight t
+  :init (vertico-posframe-mode 1))
+
 (use-package orderless
   :straight t
   :init
@@ -206,6 +210,29 @@
     "fo" 'projectile-switch-project
     "fd" 'projectile-find-dir)
   (projectile-mode))
+
+;;
+;; Dired Preview
+;;
+
+(use-package dired-preview
+  :straight t
+  :init
+  (setq dired-preview-delay 0.7)
+  (setq dired-preview-max-size (expt 2 20))
+  (setq dired-preview-ignored-extensions-regexp
+          (concat "\\."
+                  "\\(gz\\|"
+                  "zst\\|"
+                  "tar\\|"
+                  "xz\\|"
+                  "rar\\|"
+                  "zip\\|"
+                  "iso\\|"
+                  "epub"
+                  "\\)"))
+  :config
+  (dired-preview-global-mode 1))
 
 ;;
 ;; Org
@@ -777,6 +804,12 @@ ARGS is (DIR FILE) as passed by `vterm_cmd`."
       (kbd "N")  #'pdf-view-previous-search-match)))
 
 
+;;
+;; Breadcrumbs
+;;
+
+(use-package breadcrumb
+  :straight t)
 
 ;; Strip emacs stuff
 (menu-bar-mode -1)
