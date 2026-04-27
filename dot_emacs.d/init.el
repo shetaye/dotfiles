@@ -33,27 +33,27 @@
 ; 		    :width 'normal)
 
 (set-face-attribute 'default nil
- 		    :family "Cozette"
- 		    :height 130
+ 		    :family "TamzenForPowerline"
+ 		    :height 120
  		    :weight 'normal
  		    :width 'normal)
 
 (set-face-attribute 'bold nil
- 		    :family "Cozette"
- 		    :height 130
- 		    :weight 'normal
+ 		    :family "TamzenForPowerline"
+ 		    :height 120
+ 		    :weight 'bold
  		    :width 'normal)
 
 (set-face-attribute 'italic nil
- 		    :family "Cozette"
- 		    :height 130
+ 		    :family "TamzenForPowerline"
+ 		    :height 120
  		    :weight 'normal
  		    :width 'normal)
 
 (set-face-attribute 'bold-italic nil
- 		    :family "Cozette"
- 		    :height 130
- 		    :weight 'normal
+ 		    :family "TamzenForPowerline"
+ 		    :height 120
+ 		    :weight 'bold
  		    :width 'normal)
 
 
