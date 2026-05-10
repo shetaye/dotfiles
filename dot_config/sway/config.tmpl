@@ -7,7 +7,7 @@ set $mod Mod4
 #font pango:monospace 8
 #font pango:Berkeley Mono Nerd Font 8, Mononoki Nerd Font 8, monospace 8
 #font pango:BerkeleyMono Nerd Font Mono 8, Mononoki Nerd Font 8, monospace 8
-font pango:Cozette 13,BerkeleyMono Nerd Font Mono 8, Mononoki Nerd Font 8, monospace 8
+font pango:Terminess Nerd Font Mono 13, monospace 8
 
 # This font is widely installed, provides lots of unicode glyphs, right-to-left
 # text rendering and scalability on retina/hidpi displays (thanks to pango).
@@ -199,7 +199,7 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 
 # reload the configuration file
 bindsym $mod+Shift+c reload
-bindsym $mod+Shift+e exec "swaynag -f 'Berkeley Mono Nerd Font 10' -t warning -m 'Exit?' -B 'Yes, exit sway' 'swaymsg exit'"
+bindsym $mod+Shift+e exec "swaynag -f 'Terminess Nerd Font Mono 10' -t warning -m 'Exit?' -B 'Yes, exit sway' 'swaymsg exit'"
 bindsym $mod+Shift+t exec ~/.local/bin/theme-toggle
 
 # resize window (you can also use the mouse for that)
@@ -262,8 +262,8 @@ exec mako
 
 default_border pixel 2
 
-gaps inner 5
-gaps outer 5
+gaps inner 10
+gaps outer 10
 
 # set primary gruvbox colorscheme colors
 # set $bg #282828

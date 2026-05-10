@@ -390,6 +390,88 @@ vim.lsp.config("tinymist", {
 --vim.cmd("autocmd BufNewFile,BufRead *.typ setfiletype typst")
 vim.lsp.enable("tinymist")
 
+-- Show diagnostics in floating window on hover
+vim.o.updatetime = 250  -- ms before CursorHold fires (default 4000 is too slow)
+
+vim.api.nvim_create_autocmd("CursorHold", {
+  callback = function()
+    vim.diagnostic.open_float(nil, {
+      focusable = false,
+      close_events = { "BufLeave", "CursorMoved", "InsertEnter", "FocusLost" },
+      border = "rounded",
+      source = true,   -- show which LSP produced the diagnostic
+      prefix = " ",
+      scope = "cursor", -- only show diagnostic under cursor, not whole line
+    })
+  end,
+})
+
+-- K: LSP hover (types/docs) in a fixed top-right float, out of the way of
+-- the cursor-attached diagnostic float.
+local hover_win = nil
+local function lsp_hover_topright()
+  -- If a hover float is already open, focus it (second K press = enter, like default).
+  if hover_win and vim.api.nvim_win_is_valid(hover_win) then
+    vim.api.nvim_set_current_win(hover_win)
+    return
+  end
+
+  if not next(vim.lsp.get_clients({ bufnr = 0 })) then
+    vim.notify("No LSP client attached", vim.log.levels.INFO)
+    return
+  end
+
+  local params = vim.lsp.util.make_position_params(0, "utf-8")
+  vim.lsp.buf_request(0, "textDocument/hover", params, function(err, result)
+    if err or not result or not result.contents then
+      vim.notify("No hover info", vim.log.levels.INFO)
+      return
+    end
+    local lines = vim.lsp.util.convert_input_to_markdown_lines(result.contents)
+    lines = vim.lsp.util.trim_empty_lines(lines)
+    if vim.tbl_isempty(lines) then
+      vim.notify("No hover info", vim.log.levels.INFO)
+      return
+    end
+
+    local width = math.min(80, math.floor(vim.o.columns * 0.4))
+    local height = math.min(#lines, math.floor(vim.o.lines * 0.4))
+
+    local buf = vim.api.nvim_create_buf(false, true)
+    vim.api.nvim_buf_set_lines(buf, 0, -1, false, lines)
+    vim.bo[buf].filetype = "markdown"
+    vim.bo[buf].modifiable = false
+    vim.bo[buf].bufhidden = "wipe"
+
+    hover_win = vim.api.nvim_open_win(buf, false, {
+      relative = "editor",
+      anchor = "NE",
+      row = 0,
+      col = vim.o.columns,
+      width = width,
+      height = height,
+      border = "rounded",
+      style = "minimal",
+      focusable = true,
+    })
+    vim.wo[hover_win].wrap = true
+    vim.wo[hover_win].conceallevel = 2
+
+    local source_buf = vim.api.nvim_get_current_buf()
+    vim.api.nvim_create_autocmd({ "CursorMoved", "BufLeave", "InsertEnter" }, {
+      buffer = source_buf,
+      once = true,
+      callback = function()
+        if hover_win and vim.api.nvim_win_is_valid(hover_win) then
+          vim.api.nvim_win_close(hover_win, true)
+        end
+        hover_win = nil
+      end,
+    })
+  end)
+end
+vim.keymap.set("n", "K", lsp_hover_topright, { desc = "LSP hover (top-right)" })
+
 -- Telescope
 local builtin = require('telescope.builtin')
 vim.keymap.set('n', '<leader>ff', builtin.find_files, { desc = 'Telescope find files' })

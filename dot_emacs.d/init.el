@@ -33,25 +33,25 @@
 ; 		    :width 'normal)
 
 (set-face-attribute 'default nil
- 		    :family "TamzenForPowerline"
+ 		    :family "Terminess Nerd Font Mono"
  		    :height 120
  		    :weight 'normal
  		    :width 'normal)
 
 (set-face-attribute 'bold nil
- 		    :family "TamzenForPowerline"
+ 		    :family "Terminess Nerd Font Mono"
  		    :height 120
  		    :weight 'bold
  		    :width 'normal)
 
 (set-face-attribute 'italic nil
- 		    :family "TamzenForPowerline"
+ 		    :family "Terminess Nerd Font Mono"
  		    :height 120
  		    :weight 'normal
  		    :width 'normal)
 
 (set-face-attribute 'bold-italic nil
- 		    :family "TamzenForPowerline"
+ 		    :family "Terminess Nerd Font Mono"
  		    :height 120
  		    :weight 'bold
  		    :width 'normal)
