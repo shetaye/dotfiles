@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# Darkman transition script: switch wofi by copying the selected stylesheet to
+# the stable filename read by wofi at launch.
+
+set -eu
+
+mode="${1:-}"
+case "$mode" in
+    ""|null) exit 0 ;;
+    dark|light) ;;
+    *)
+        echo "usage: $0 dark|light" >&2
+        exit 2
+        ;;
+esac
+
+config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+wofi_dir="$config_home/wofi"
+style_file="$wofi_dir/style-$mode.css"
+
+if [ -f "$style_file" ]; then
+    cp "$style_file" "$wofi_dir/style.css"
+fi

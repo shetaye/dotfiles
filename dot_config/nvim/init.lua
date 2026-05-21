@@ -182,23 +182,6 @@ require("lazy").setup({
         dependencies = { 'nvim-lua/plenary.nvim' }
     },
     {
-        "hyperb1iss/silkcircuit-nvim",
-        lazy = false,
-        priority = 1000,
-        config = function()
-            require("silkcircuit").setup({
-                variant = "glow",
-            })
-            --vim.cmd.colorscheme("silkcircuit")
-            -- OLED-friendly pure black background
-            vim.api.nvim_set_hl(0, "Normal", { bg = "#000000" })
-            vim.api.nvim_set_hl(0, "NormalFloat", { bg = "#000000" })
-            vim.api.nvim_set_hl(0, "NormalNC", { bg = "#000000" })
-            vim.api.nvim_set_hl(0, "SignColumn", { bg = "#000000" })
-            vim.api.nvim_set_hl(0, "EndOfBuffer", { bg = "#000000" })
-        end,
-    },
-    {
         "miikanissi/modus-themes.nvim",
         lazy = false,
         priority = 1000,
@@ -214,16 +197,19 @@ require("lazy").setup({
             end
 
             local mode = read_theme_mode()
-            local style = mode == "light" and "light" or "dark"
-            local colorscheme = mode == "light" and "modus_operandi" or "modus_vivendi"
+            local background = mode == "light" and "light" or "dark"
+            local style = mode == "light" and "modus_operandi" or "modus_vivendi"
 
             require("modus-themes").setup({
                 style = style,
                 variant = "tinted",
-                italic_constructs = true,
-                bold_constructs = true,
+                styles = {
+                    comments = { italic = true },
+                    keywords = { italic = true },
+                },
             })
-            vim.cmd.colorscheme(colorscheme)
+            vim.o.background = background
+            vim.cmd.colorscheme("modus")
         end,
     },
     {
@@ -248,15 +234,15 @@ require("lazy").setup({
         })
       end,
     },
-    {
-        'MeanderingProgrammer/render-markdown.nvim',
-        dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' },            -- if you use the mini.nvim suite
-        ---@module 'render-markdown'
-        ---@type render.md.UserConfig
-        opts = {
-            enabled = true
-        },
-    },
+    --{
+    --    'MeanderingProgrammer/render-markdown.nvim',
+    --    dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-mini/mini.nvim' },            -- if you use the mini.nvim suite
+    --    ---@module 'render-markdown'
+    --    ---@type render.md.UserConfig
+    --    opts = {
+    --        enabled = false
+    --    },
+    --},
     --{
     --    "Kurama622/llm.nvim",
     --    dependencies = { "nvim-lua/plenary.nvim", "MunifTanjim/nui.nvim"},
@@ -336,7 +322,7 @@ require("lazy").setup({
   },
   -- Configure any other settings here. See the documentation for more details.
   -- colorscheme that will be used when installing plugins.
-  install = { colorscheme = {"modus_operandi"} },
+  install = { colorscheme = {"modus"} },
   -- automatically check for plugin updates
   checker = { enabled = false },
 })
@@ -367,7 +353,7 @@ vim.lsp.config('sourcekit', {
 vim.lsp.enable('sourcekit')
 
 -- clangd (for everything else)
-vim.lsp.enable('clangd')
+-- vim.lsp.enable('clangd')
 
 vim.lsp.enable('rust_analyzer')
 

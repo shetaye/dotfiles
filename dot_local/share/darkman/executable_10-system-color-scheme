@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# Darkman transition script: publish the current preference through the GNOME
+# settings key used by GTK/libadwaita applications and other desktop-aware
+# clients.
+
+set -eu
+
+mode="${1:-}"
+case "$mode" in
+    ""|null) exit 0 ;;
+    light) scheme="prefer-light" ;;
+    dark) scheme="prefer-dark" ;;
+    *)
+        echo "usage: $0 dark|light" >&2
+        exit 2
+        ;;
+esac
+
+if command -v gsettings >/dev/null 2>&1; then
+    gsettings set org.gnome.desktop.interface color-scheme "$scheme" 2>/dev/null || true
+fi

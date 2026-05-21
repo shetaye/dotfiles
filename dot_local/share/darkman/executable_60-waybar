@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# Darkman transition script: switch waybar by copying the selected stylesheet to
+# style.css. Running waybar processes receive SIGUSR2, which waybar uses to
+# reload CSS.
+
+set -eu
+
+mode="${1:-}"
+case "$mode" in
+    ""|null) exit 0 ;;
+    dark|light) ;;
+    *)
+        echo "usage: $0 dark|light" >&2
+        exit 2
+        ;;
+esac
+
+config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+waybar_dir="$config_home/waybar"
+style_file="$waybar_dir/style-$mode.css"
+
+if [ -f "$style_file" ]; then
+    cp "$style_file" "$waybar_dir/style.css"
+fi
+
+if command -v killall >/dev/null 2>&1; then
+    killall -SIGUSR2 waybar 2>/dev/null || true
+fi

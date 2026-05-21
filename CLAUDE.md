@@ -1,4 +1,11 @@
-This is Joseph's *home directory*
+This is Joseph's *home directory*.
+
+Important:
+- Treat `/home/shetaye` as a live home directory, not an isolated project checkout.
+- For dotfiles, use `chezmoi`. The source directory is `~/.local/share/chezmoi`.
+- Edit files in the `chezmoi` source tree (for example `dot_*`, `private_*`, and `.tmpl` files) rather than their destinations in `$HOME`.
+- After changing managed dotfiles, run `chezmoi apply` to update the destination files.
+- `~/.claude/settings.json` is intentionally unmanaged because Claude edits it frequently.
 
 Relevant subdirectories:
 - `.config/`: Dotfiles
@@ -13,7 +20,3 @@ Relevant subdirectories:
 - `typst/`: Typst compilation root
 - `tex/`: (La)Tex compilation root
 - `media/`: Media (e.g. screenshots, etc.)
-
-Relevant for dotfiles: Joseph uses `chezmoi` to manage dotfiles. The source directory is `~/.local/share/chezmoi`. Edit files there (e.g. `.tmpl` templates) rather than the destinations, then `chezmoi apply` to push changes.
-
-Exception: `~/.claude/settings.json` is intentionally unmanaged because Claude edits it frequently.

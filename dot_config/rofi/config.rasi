@@ -1,0 +1,10 @@
+configuration {
+    modi: "drun,run,window";
+    show-icons: true;
+    icon-theme: "Papirus";
+    font: "BerkeleyMono Nerd Font Mono 10";
+    terminal: "alacritty";
+    drun-display-format: "{name}";
+}
+
+@theme "current-theme"

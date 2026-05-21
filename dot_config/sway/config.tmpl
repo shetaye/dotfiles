@@ -200,7 +200,7 @@ bindsym $mod+Shift+0 move container to workspace number $ws10
 # reload the configuration file
 bindsym $mod+Shift+c reload
 bindsym $mod+Shift+e exec "swaynag -f 'Terminess Nerd Font Mono 10' -t warning -m 'Exit?' -B 'Yes, exit sway' 'swaymsg exit'"
-bindsym $mod+Shift+t exec ~/.local/bin/theme-toggle
+bindsym $mod+Shift+t exec --no-startup-id darkman toggle
 
 # resize window (you can also use the mouse for that)
 mode "resize" {

@@ -7,6 +7,21 @@
 # Add user bin
 export PATH="$HOME/.local/bin/:$PATH"
 
+# XDG base directories. Darkman uses these to find its config and transition
+# scripts, so keep the user directories explicit in every shell environment.
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-$HOME/.local/share}"
+export XDG_CONFIG_DIRS="${XDG_CONFIG_DIRS:-/etc/xdg}"
+export XDG_DATA_DIRS="${XDG_DATA_DIRS:-/usr/local/share:/usr/share}"
+case ":$XDG_CONFIG_DIRS:" in
+  *":$XDG_CONFIG_HOME:"*) ;;
+  *) export XDG_CONFIG_DIRS="$XDG_CONFIG_HOME:$XDG_CONFIG_DIRS" ;;
+esac
+case ":$XDG_DATA_DIRS:" in
+  *":$XDG_DATA_HOME:"*) ;;
+  *) export XDG_DATA_DIRS="$XDG_DATA_HOME:$XDG_DATA_DIRS" ;;
+esac
+
 # Time
 export TZ='America/Los_Angeles'
 
@@ -235,3 +250,5 @@ export SUDO_ASKPASS="$HOME/.local/bin/sudo-askpass"
 export MULTITUDE_DATA_DIR="$HOME/.multitude"
 
 alias sel4-container='make -C /home/shetaye/tmp4/seL4-CAmkES-L4v-dockerfiles user HOST_DIR=$(pwd)'
+
+alias aether='cd /home/shetaye/projects/adams/aether && cargo run --release --bin aether-node-tui -- --identity joseph-$HOSTNAME nats://bartholomew:4222'

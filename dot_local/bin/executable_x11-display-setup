@@ -1,0 +1,21 @@
+#!/bin/sh
+
+if xrandr --query | grep -q '^eDP-1 connected'; then
+    xrandr --output eDP-1 --mode 1920x1200 --rate 60 2>/dev/null || true
+fi
+
+for output in DP-4 DP-3 DP-2 DP-1 HDMI-1 HDMI-2; do
+    if xrandr --query | grep -q "^$output connected"; then
+        xrandr --output "$output" --mode 5120x1440 --rate 120 2>/dev/null ||
+            xrandr --output "$output" --mode 5120x1440 --rate 59.98 2>/dev/null ||
+            true
+    fi
+done
+
+if [ -r /proc/acpi/button/lid/LID0/state ] &&
+    grep -qi closed /proc/acpi/button/lid/LID0/state &&
+    xrandr --query | grep -q '^eDP-1 connected'; then
+    xrandr --output eDP-1 --off 2>/dev/null || true
+fi
+
+feh --no-fehbg --bg-fill "$HOME/.config/wallpaper.jpg"

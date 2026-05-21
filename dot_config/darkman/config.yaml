@@ -1,0 +1,9 @@
+# Managed by chezmoi.
+#
+# Enable darkman's automatic sunrise/sundown scheduling. Darkman asks geoclue
+# for the current location and uses that to calculate sunrise/sundown.
+usegeoclue: true
+
+# Expose the current mode through the XDG Settings portal for applications that
+# consume org.freedesktop.appearance color-scheme.
+portal: true

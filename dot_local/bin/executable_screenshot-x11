@@ -1,0 +1,75 @@
+#!/bin/sh
+
+screenshot_copy_all_displays="Screenshot all displays to clipboard"
+screenshot_all_displays_to_file="Screenshot all displays to file"
+screenshot_copy_area="Screenshot area to clipboard"
+screenshot_copy_area_ocr="Screenshot area to copy text"
+screenshot_area_to_file="Screenshot area to file"
+screenshot_copy_window="Screenshot focused window to clipboard"
+screenshot_window_to_file="Screenshot focused window to file"
+screenshot_copy_monitor="Screenshot focused monitor to clipboard"
+screenshot_monitor_to_file="Screenshot focused monitor to file"
+
+options="$screenshot_copy_all_displays
+$screenshot_all_displays_to_file
+$screenshot_copy_area
+$screenshot_copy_area_ocr
+$screenshot_area_to_file
+$screenshot_copy_window
+$screenshot_window_to_file
+$screenshot_copy_monitor
+$screenshot_monitor_to_file"
+
+choice="$(printf '%s\n' "$options" | rofi -dmenu -p Screenshot)"
+screenshot_path="$HOME/media/pictures/screenshots/screenshot-$(date +'%Y%m%d-%H%M%S').png"
+
+focused_monitor_geometry() {
+    xdotool getmouselocation --shell |
+        awk -F= '/^X=/{x=$2} /^Y=/{y=$2} END{print x, y}' |
+        while read -r px py; do
+            xrandr --query |
+                awk -v px="$px" -v py="$py" '
+                    / connected/ {
+                        for (i = 1; i <= NF; i++) {
+                            if ($i ~ /^[0-9]+x[0-9]+[+-][0-9]+[+-][0-9]+$/) {
+                                split($i, g, /x|\\+|-/)
+                                w = g[1]; h = g[2]; x = g[3]; y = g[4]
+                                if (px >= x && px < x + w && py >= y && py < y + h) {
+                                    print x "," y " " w "x" h
+                                    exit
+                                }
+                            }
+                        }
+                    }'
+        done
+}
+
+case $choice in
+    "$screenshot_copy_all_displays")
+        maim | xclip -selection clipboard -t image/png
+        ;;
+    "$screenshot_all_displays_to_file")
+        maim "$screenshot_path" && printf '%s' "$screenshot_path" | xclip -selection clipboard
+        ;;
+    "$screenshot_copy_area")
+        maim -s | xclip -selection clipboard -t image/png
+        ;;
+    "$screenshot_copy_area_ocr")
+        maim -s | tesseract - - | xclip -selection clipboard
+        ;;
+    "$screenshot_area_to_file")
+        maim -s "$screenshot_path" && printf '%s' "$screenshot_path" | xclip -selection clipboard
+        ;;
+    "$screenshot_copy_window")
+        maim -i "$(xdotool getactivewindow)" | xclip -selection clipboard -t image/png
+        ;;
+    "$screenshot_window_to_file")
+        maim -i "$(xdotool getactivewindow)" "$screenshot_path" && printf '%s' "$screenshot_path" | xclip -selection clipboard
+        ;;
+    "$screenshot_copy_monitor")
+        maim -g "$(focused_monitor_geometry)" | xclip -selection clipboard -t image/png
+        ;;
+    "$screenshot_monitor_to_file")
+        maim -g "$(focused_monitor_geometry)" "$screenshot_path" && printf '%s' "$screenshot_path" | xclip -selection clipboard
+        ;;
+esac

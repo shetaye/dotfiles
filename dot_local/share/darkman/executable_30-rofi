@@ -1,0 +1,24 @@
+#!/bin/sh
+#
+# Darkman transition script: switch rofi by copying the selected theme to the
+# stable filename imported by rofi/config.rasi.
+
+set -eu
+
+mode="${1:-}"
+case "$mode" in
+    ""|null) exit 0 ;;
+    dark|light) ;;
+    *)
+        echo "usage: $0 dark|light" >&2
+        exit 2
+        ;;
+esac
+
+config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+rofi_dir="$config_home/rofi"
+theme_file="$rofi_dir/theme-$mode.rasi"
+
+if [ -f "$theme_file" ]; then
+    cp "$theme_file" "$rofi_dir/current-theme.rasi"
+fi

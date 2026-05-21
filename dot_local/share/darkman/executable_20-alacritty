@@ -1,0 +1,26 @@
+#!/bin/sh
+#
+# Darkman transition script: switch Alacritty by regenerating the imported
+# current-theme.toml file. The main alacritty.toml imports this file, and the
+# touch nudges running Alacritty instances to reload their configuration.
+
+set -eu
+
+mode="${1:-}"
+case "$mode" in
+    ""|null) exit 0 ;;
+    light) theme="operandi" ;;
+    dark) theme="vivendi" ;;
+    *)
+        echo "usage: $0 dark|light" >&2
+        exit 2
+        ;;
+esac
+
+config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+alacritty_dir="$config_home/alacritty"
+themes_dir="$alacritty_dir/themes"
+
+mkdir -p "$alacritty_dir"
+printf '[general]\nimport = ["%s/modus-%s.toml"]\n' "$themes_dir" "$theme" > "$alacritty_dir/current-theme.toml"
+touch "$alacritty_dir/alacritty.toml"

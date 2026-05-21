@@ -717,14 +717,14 @@ ARGS is (DIR FILE) as passed by `vterm_cmd`."
     modus-themes-common-palette-overrides nil)
 
 (defun my/read-theme-mode ()
-  "Read theme mode from ~/.config/theme-mode."
+  "Read the theme mode cache maintained by darkman."
   (let ((file (expand-file-name "~/.config/theme-mode")))
     (if (file-exists-p file)
         (string-trim (with-temp-buffer (insert-file-contents file) (buffer-string)))
       "dark")))
 
 (defun my/apply-theme-from-file ()
-  "Load the theme matching ~/.config/theme-mode."
+  "Load the theme matching the darkman mode cache."
   (let ((mode (my/read-theme-mode)))
     (if (string= mode "light")
         (load-theme 'modus-operandi-tinted t)
@@ -735,7 +735,7 @@ ARGS is (DIR FILE) as passed by `vterm_cmd`."
 (evil-leader/set-key
   "mt" (lambda ()
          (interactive)
-         (shell-command "theme-toggle toggle")))
+         (shell-command "darkman toggle")))
 
 ;;
 ;; HASS

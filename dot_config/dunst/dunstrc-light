@@ -1,0 +1,28 @@
+[global]
+    font = Terminess Nerd Font Mono 12
+    width = 350
+    height = (0, 150)
+    offset = (20, 20)
+    origin = top-right
+    padding = 15
+    horizontal_padding = 15
+    frame_width = 2
+    frame_color = "#9f9690"
+    separator_color = frame
+    icon_position = left
+    max_icon_size = 48
+    markup = full
+    format = "<b>%s</b>\n%b"
+    corner_radius = 0
+    background = "#c9b9b0"
+    foreground = "#000000"
+
+[urgency_low]
+    frame_color = "#efe9dd"
+    foreground = "#595959"
+
+[urgency_critical]
+    background = "#c9b9b0"
+    foreground = "#000000"
+    frame_color = "#d00000"
+    timeout = 0

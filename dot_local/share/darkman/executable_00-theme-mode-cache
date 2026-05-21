@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# Darkman transition script: record the active mode for tools that only read a
+# file during startup. Darkman remains the source of truth; this cache exists so
+# Emacs and Neovim can pick the right initial theme before they receive live
+# transition commands.
+
+set -eu
+
+mode="${1:-}"
+case "$mode" in
+    ""|null) exit 0 ;;
+    dark|light) ;;
+    *)
+        echo "usage: $0 dark|light" >&2
+        exit 2
+        ;;
+esac
+
+config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+mkdir -p "$config_home"
+printf '%s\n' "$mode" > "$config_home/theme-mode"

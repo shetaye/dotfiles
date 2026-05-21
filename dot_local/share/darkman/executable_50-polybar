@@ -1,0 +1,29 @@
+#!/bin/sh
+#
+# Darkman transition script: switch polybar colors by regenerating the included
+# current-colors.ini file, then ask polybar to restart so every bar picks up the
+# new palette.
+
+set -eu
+
+mode="${1:-}"
+case "$mode" in
+    ""|null) exit 0 ;;
+    dark|light) ;;
+    *)
+        echo "usage: $0 dark|light" >&2
+        exit 2
+        ;;
+esac
+
+config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+polybar_dir="$config_home/polybar"
+colors_file="$polybar_dir/colors-$mode.ini"
+
+if [ -f "$colors_file" ]; then
+    cp "$colors_file" "$polybar_dir/current-colors.ini"
+fi
+
+if command -v polybar-msg >/dev/null 2>&1; then
+    polybar-msg cmd restart 2>/dev/null || true
+fi

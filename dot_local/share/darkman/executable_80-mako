@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# Darkman transition script: switch mako to the matching config file and reload
+# a running mako daemon when makoctl is available.
+
+set -eu
+
+mode="${1:-}"
+case "$mode" in
+    ""|null) exit 0 ;;
+    dark|light) ;;
+    *)
+        echo "usage: $0 dark|light" >&2
+        exit 2
+        ;;
+esac
+
+config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+mako_dir="$config_home/mako"
+config_file="$mako_dir/config-$mode"
+
+if [ -f "$config_file" ]; then
+    cp "$config_file" "$mako_dir/config"
+fi
+
+if command -v makoctl >/dev/null 2>&1; then
+    makoctl reload 2>/dev/null || true
+fi

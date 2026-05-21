@@ -1,0 +1,28 @@
+#!/bin/sh
+#
+# Darkman transition script: switch dunst to the matching config file and ask a
+# running daemon to reload. Missing dunstctl is harmless on non-dunst sessions.
+
+set -eu
+
+mode="${1:-}"
+case "$mode" in
+    ""|null) exit 0 ;;
+    dark|light) ;;
+    *)
+        echo "usage: $0 dark|light" >&2
+        exit 2
+        ;;
+esac
+
+config_home="${XDG_CONFIG_HOME:-$HOME/.config}"
+dunst_dir="$config_home/dunst"
+config_file="$dunst_dir/dunstrc-$mode"
+
+if [ -f "$config_file" ]; then
+    cp "$config_file" "$dunst_dir/dunstrc"
+fi
+
+if command -v dunstctl >/dev/null 2>&1; then
+    dunstctl reload 2>/dev/null || true
+fi

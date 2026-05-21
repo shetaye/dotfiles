@@ -1,0 +1,22 @@
+#!/bin/sh
+#
+# Darkman transition script: update a running Emacs daemon through emacsclient.
+# Startup theme selection still reads the theme-mode cache maintained by
+# 00-theme-mode-cache.
+
+set -eu
+
+mode="${1:-}"
+case "$mode" in
+    ""|null) exit 0 ;;
+    light) theme="modus-operandi-tinted" ;;
+    dark) theme="modus-vivendi-tinted" ;;
+    *)
+        echo "usage: $0 dark|light" >&2
+        exit 2
+        ;;
+esac
+
+if command -v emacsclient >/dev/null 2>&1; then
+    emacsclient -e "(load-theme '$theme t)" 2>/dev/null || true
+fi

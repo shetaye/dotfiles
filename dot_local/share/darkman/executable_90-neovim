@@ -1,0 +1,34 @@
+#!/bin/sh
+#
+# Darkman transition script: update live Neovim instances connected through
+# --listen sockets. Startup theme selection is handled separately by the
+# theme-mode cache written by 00-theme-mode-cache.
+
+set -eu
+
+mode="${1:-}"
+case "$mode" in
+    ""|null) exit 0 ;;
+    light)
+        background="light"
+        style="modus_operandi"
+        ;;
+    dark)
+        background="dark"
+        style="modus_vivendi"
+        ;;
+    *)
+        echo "usage: $0 dark|light" >&2
+        exit 2
+        ;;
+esac
+
+if ! command -v nvim >/dev/null 2>&1; then
+    exit 0
+fi
+
+for sock in /run/user/"$(id -u)"/nvim.*.0 /tmp/nvim.*/0; do
+    [ -S "$sock" ] || continue
+    nvim --server "$sock" --remote-send \
+        "<Cmd>lua vim.o.background='${background}'; require('modus-themes').setup({style='${style}',variant='tinted',styles={comments={italic=true},keywords={italic=true}}}); vim.cmd.colorscheme('modus')<CR>" 2>/dev/null || true
+done

@@ -1,0 +1,93 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+message="$(rofi -dmenu -p "lock note" -lines 0 < /dev/null)"
+if [ -z "${message//[[:space:]]/}" ]; then
+    exit 0
+fi
+
+tmpdir="$(mktemp -d)"
+trap 'rm -rf "$tmpdir"' EXIT
+
+cache_dir="${XDG_CACHE_HOME:-$HOME/.cache}/lock-note"
+log_file="$cache_dir/lock-note.log"
+note_file="$tmpdir/note.txt"
+lock_image_tmp="$tmpdir/lock-note.png"
+lock_image="$cache_dir/lock-note.png"
+printf '%s\n' "$message" > "$note_file"
+mkdir -p "$cache_dir"
+
+wallpaper="$HOME/.config/wallpaper.png"
+if [ ! -r "$wallpaper" ]; then
+    wallpaper="$HOME/.config/wallpaper.jpg"
+fi
+
+if [ ! -r "$wallpaper" ]; then
+    printf 'lock-note: no readable wallpaper found\n' >&2
+    exit 1
+fi
+
+dimensions="$(magick identify -format '%w %h' "$wallpaper[0]")"
+read -r screen_width screen_height <<< "$dimensions"
+
+if [ -z "$screen_width" ] || [ -z "$screen_height" ]; then
+    printf 'lock-note: could not read wallpaper dimensions\n' >&2
+    exit 1
+fi
+
+note_left=$((screen_width * 23 / 100))
+note_top=$((screen_height * 36 / 100))
+note_right=$((screen_width * 77 / 100))
+note_bottom=$((screen_height * 58 / 100))
+text_width=$((note_right - note_left - screen_width * 6 / 100))
+text_height=$((note_bottom - note_top - screen_height * 6 / 100))
+point_size=$((screen_height / 28))
+
+if [ "$point_size" -lt 24 ]; then
+    point_size=24
+elif [ "$point_size" -gt 54 ]; then
+    point_size=54
+fi
+
+theme_file="${XDG_CONFIG_HOME:-$HOME/.config}/rofi/current-theme.rasi"
+bg_color="#0d0e1c"
+border_color="#61647a"
+fg_color="#ffffff"
+
+if [ -r "$theme_file" ]; then
+    bg_color="$(sed -n 's/^[[:space:]]*bg:[[:space:]]*\(#[0-9A-Fa-f]\{6\}\);/\1/p' "$theme_file" | head -n 1)"
+    border_color="$(sed -n 's/^[[:space:]]*border:[[:space:]]*\(#[0-9A-Fa-f]\{6\}\);/\1/p' "$theme_file" | head -n 1)"
+    fg_color="$(sed -n 's/^[[:space:]]*fg:[[:space:]]*\(#[0-9A-Fa-f]\{6\}\);/\1/p' "$theme_file" | head -n 1)"
+fi
+
+: "${bg_color:=#0d0e1c}"
+: "${border_color:=#61647a}"
+: "${fg_color:=#ffffff}"
+
+magick "$wallpaper" \
+    -auto-orient \
+    -resize "${screen_width}x${screen_height}^" \
+    -gravity center \
+    -extent "${screen_width}x${screen_height}" \
+    -fill "$bg_color" \
+    -stroke "$border_color" \
+    -strokewidth 4 \
+    -draw "rectangle ${note_left},${note_top} ${note_right},${note_bottom}" \
+    -stroke none \
+    -fill "$fg_color" \
+    -font BerkeleyMono-Nerd-Font-Mono \
+    -pointsize "$point_size" \
+    -gravity center \
+    -size "${text_width}x${text_height}" \
+    "caption:@${note_file}" \
+    -geometry +0+0 \
+    -composite \
+    "$lock_image_tmp" 2>"$log_file"
+
+mv "$lock_image_tmp" "$lock_image"
+
+if command -v notify-send >/dev/null 2>&1; then
+    notify-send "Lock note ready" "$lock_image"
+fi
+
+exec i3lock --nofork -i "$lock_image"
