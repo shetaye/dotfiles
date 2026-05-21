@@ -6,9 +6,16 @@ fi
 
 for output in DP-4 DP-3 DP-2 DP-1 HDMI-1 HDMI-2; do
     if xrandr --query | grep -q "^$output connected"; then
+{{- if eq .chezmoi.hostname "enkidu" }}
+        xrandr --output "$output" --mode 5120x1440 --rate 240 2>/dev/null ||
+            xrandr --output "$output" --mode 5120x1440 --rate 120 2>/dev/null ||
+            xrandr --output "$output" --mode 5120x1440 --rate 59.98 2>/dev/null ||
+            true
+{{- else }}
         xrandr --output "$output" --mode 5120x1440 --rate 120 2>/dev/null ||
             xrandr --output "$output" --mode 5120x1440 --rate 59.98 2>/dev/null ||
             true
+{{- end }}
     fi
 done
 
@@ -18,4 +25,8 @@ if [ -r /proc/acpi/button/lid/LID0/state ] &&
     xrandr --output eDP-1 --off 2>/dev/null || true
 fi
 
+{{ if eq .chezmoi.hostname "enkidu" -}}
+feh --no-fehbg --bg-fill "$HOME/.config/wallpaper-big.jpg"
+{{- else -}}
 feh --no-fehbg --bg-fill "$HOME/.config/wallpaper.jpg"
+{{- end }}

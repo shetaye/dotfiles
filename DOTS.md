@@ -44,7 +44,6 @@ X11 (the daily driver — `~/.xinitrc` ends in `exec i3`):
 startx → xinitrc → i3
   ├─ dex --autostart                # XDG autostart .desktop files
   ├─ ~/.local/bin/x11-display-setup # xrandr + wallpaper via feh
-  ├─ darkman run                    # auto theme switching
   ├─ xss-lock -- i3lock --nofork    # lock on sleep / idle
   ├─ nm-applet                      # NM tray icon
   ├─ emacs --daemon
@@ -54,6 +53,10 @@ startx → xinitrc → i3
 ```
 
 Sway mirrors this with mako instead of dunst and the compositor folded in.
+
+`darkman` runs out-of-band as a systemd user unit (`systemctl --user enable
+--now darkman.service`), not from the WM config — so the same scheduler
+serves X11 and Wayland sessions and survives WM restarts.
 
 ## Keybinds (mod = Super)
 

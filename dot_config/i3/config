@@ -4,7 +4,6 @@ font pango:Terminess Nerd Font Mono 13, monospace 8
 
 exec --no-startup-id dex --autostart --environment i3
 exec --no-startup-id ~/.local/bin/x11-display-setup
-exec --no-startup-id sh -c 'sleep 2; exec darkman run'
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec --no-startup-id nm-applet
 exec --no-startup-id emacs --daemon

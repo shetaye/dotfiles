@@ -1,5 +1,9 @@
 [font]
+{{- if eq .chezmoi.hostname "enkidu" }}
+size = 13.5
+{{- else }}
 size = 9
+{{- end }}
 
 [font.normal]
 family = "Terminess Nerd Font Mono"

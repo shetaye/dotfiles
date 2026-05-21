@@ -30,23 +30,15 @@ output eDP-1 {
   resolution 1920x1080
 }
 
-output "Microstep MPG491CX*" {
-{{- if eq .chezmoi.hostname "enkidu" }}
-  mode 5120x1440@120.000Hz
-{{- else }}
-  mode 5120x1440@59.977Hz
-{{- end }}
-  background #000000 solid_color
-}
-
 output DP-3 {
 {{- if eq .chezmoi.hostname "enkidu" }}
-  mode 5120x1440@120.000Hz
+  mode 5120x1440@240.000Hz
 {{- else }}
   mode 5120x1440@59.977Hz
 {{- end }}
-  background #000000 solid_color
+  background ~/.config/wallpaper-big.jpg fill
 }
+
 
 bindswitch --reload --locked lid:on output $laptop disable
 bindswitch --reload --locked lid:off output $laptop enable
