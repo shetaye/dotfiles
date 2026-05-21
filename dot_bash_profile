@@ -1,0 +1,25 @@
+#
+# ~/.bash_profile
+
+[[ -f ~/.bashrc ]] && . ~/.bashrc
+
+# if [ -z "$WAYLAND_DISPLAY" ] && [ -n "$XDG_VTNR" ] && [ "$XDG_VTNR" -eq 1 ] ; then
+#     # exec sway
+# fi
+
+. "$HOME/.local/bin/env"
+
+# >>> juliaup initialize >>>
+
+# !! Contents within this block are managed by juliaup !!
+
+case ":$PATH:" in
+    *:/home/shetaye/.juliaup/bin:*)
+        ;;
+
+    *)
+        export PATH=/home/shetaye/.juliaup/bin${PATH:+:${PATH}}
+        ;;
+esac
+
+# <<< juliaup initialize <<<
