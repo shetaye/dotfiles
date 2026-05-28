@@ -1,5 +1,5 @@
 [global]
-    font = Terminess Nerd Font Mono 12
+    font = IosevkaTerm Nerd Font Mono 12
     width = 350
     height = (0, 150)
     offset = (20, 20)
